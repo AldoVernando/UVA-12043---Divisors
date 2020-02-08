@@ -1,0 +1,59 @@
+#include<stdio.h>
+
+long long Rescount = 0;
+long long Ressum = 0;
+
+void countDivisor(int num,int b,int k){
+
+	long long count = 0;
+	long long sum = 0;
+	
+	int lastIndex = 2;
+	
+	for(int i=1;i*i<=num;i++){
+		if(num%i == 0) {
+			lastIndex = i;
+			sum += i;
+			
+			if(i*i != num){
+				sum += num/i;
+			}
+			
+			count++;
+		}
+	}
+	if(lastIndex*lastIndex == num){
+		count += count-1;
+	}else{
+		count += count;
+	}
+
+	Rescount += count;
+	Ressum += sum;
+}
+
+int main(){
+	
+	int input;
+	
+	scanf("%d",&input);
+	
+	int a,b,k;
+	
+	for(int i=0;i<input;i++){
+		scanf("%d %d %d",&a,&b,&k);
+		
+		Rescount = 0;
+		Ressum = 0;
+		
+		for(int j=a;j<=b;j++){
+			if(j%k == 0){
+				countDivisor(j,b,k);
+				j+= k-1;
+			}
+		}
+		printf("%lld %lld\n",Rescount,Ressum);
+	}
+	
+	return 0;
+}
